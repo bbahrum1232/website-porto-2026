@@ -5,12 +5,9 @@
   const applyCompanyFilter = company=>{
     let visibleCards = 0;
     cards.forEach(card=>{
-      if(card.dataset.company===company){
-        card.classList.remove('hidden');
-        visibleCards++;
-      }else{
-        card.classList.add('hidden');
-      }
+      const isVisible = card.dataset.company===company;
+      card.classList.toggle('hidden',!isVisible);
+      if(isVisible) visibleCards++; 
     });
     if(emptyProject) emptyProject.hidden = visibleCards > 0;
   };

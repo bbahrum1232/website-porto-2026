@@ -216,7 +216,9 @@
   .grid-bottom{grid-template-columns:repeat(4,1fr);}
   .rosejas-feed-top,.rosejas-feed-bottom{grid-template-columns:repeat(5,1fr);}
   .rosejas-reels{grid-template-columns:repeat(4,1fr);}
+  .rosejas-video-bottom{grid-template-columns:repeat(5,1fr);}
   .griya-long-row{grid-template-columns:1fr;}
+  .taman-long-row{grid-template-columns:1fr;}
   .grid-top .ratio-feed,.grid-middle .ratio-landscape,
   .grid-bottom .ratio-portrait{grid-column:auto;}
   .grid-row:has(.card.hidden){display:none;}
@@ -244,13 +246,17 @@
   }
   .card[data-cat="video"]{border-radius:2px;}
   .card[data-cat="desain"]{border-radius:14px;}
-
+ 
   .card.ratio-landscape{grid-column:span 2;aspect-ratio:16 / 9;}
   .card.ratio-feed{aspect-ratio:1 / 1;}
   .card.ratio-portrait{aspect-ratio:9 / 16;}
 
   .griya-long-card{aspect-ratio:auto;display:block;background:#fff;}
   .griya-long-card img.thumb{position:relative;width:100%;height:auto;object-fit:contain;}
+  .taman-long-card{aspect-ratio:auto;display:block;background:#fff;}
+  .taman-long-card img.thumb{position:relative;width:100%;height:auto;object-fit:contain;}
+  .rosejas-long-card{aspect-ratio:auto;display:block;background:#fff;}
+  .rosejas-long-card img.thumb{position:relative;width:100%;height:auto;object-fit:contain;}
 
 
   .rosejas-feed-placeholder,
@@ -261,7 +267,10 @@
     font-size:14px;font-weight:700;
   }
   .rosejas-feed-placeholder{aspect-ratio:4 / 5;}
+  .rosejas-feed-card{aspect-ratio:4 / 5;}
   .rosejas-reels-placeholder{aspect-ratio:9 / 16;}
+  .rosejas-reels-card{aspect-ratio:9 / 16;}
+  .rosejas-video-card{aspect-ratio:9 / 16;}
   .rosejas-feed-placeholder::before,
   .rosejas-reels-placeholder::before{
     position:absolute;top:14px;left:14px;
@@ -455,6 +464,7 @@
     .grid-top,.grid-bottom{grid-template-columns:repeat(2,1fr);}
     .rosejas-feed-top,.rosejas-feed-bottom{grid-template-columns:repeat(2,1fr);}
     .rosejas-reels{grid-template-columns:repeat(2,1fr);}
+    .rosejas-video-bottom{grid-template-columns:repeat(2,1fr);}
     .about{grid-template-columns:1fr;}
     .avatar{max-width:280px;margin:0 auto;}
     .process{grid-template-columns:repeat(2,1fr);}
