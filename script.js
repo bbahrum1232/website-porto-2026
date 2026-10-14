@@ -2,15 +2,27 @@
   const chips = document.querySelectorAll('.chip');
   const cards = document.querySelectorAll('.card');
   const emptyProject = document.querySelector('.empty-project');
+  const projectSearch = document.getElementById('projectSearch');
+  let selectedCompany = document.querySelector('.chip.active')?.dataset.filter;
+  let searchTerm = '';
   const applyCompanyFilter = company=>{
+    selectedCompany = company;
     let visibleCards = 0;
     cards.forEach(card=>{
-      const isVisible = card.dataset.company===company;
+      const searchableText = `${card.textContent} ${card.querySelector('img')?.alt || ''} ${card.dataset.cat || ''}`.toLowerCase();
+      const isVisible = card.dataset.company===company && searchableText.includes(searchTerm);
       card.classList.toggle('hidden',!isVisible);
       if(isVisible) visibleCards++; 
     });
-    if(emptyProject) emptyProject.hidden = visibleCards > 0;
+    if(emptyProject){
+      emptyProject.hidden = visibleCards > 0;
+      emptyProject.textContent = searchTerm ? 'Tidak ada karya yang cocok dengan pencarian ini.' : 'Project untuk company ini belum ditambahkan.';
+    }
   };
+  projectSearch?.addEventListener('input',()=>{
+    searchTerm = projectSearch.value.trim().toLowerCase();
+    applyCompanyFilter(selectedCompany);
+  });
   chips.forEach(chip=>{
     chip.addEventListener('click',()=>{
       chips.forEach(c=>c.classList.remove('active'));
@@ -18,24 +30,19 @@
       applyCompanyFilter(chip.dataset.filter);
     });
   });
-  applyCompanyFilter(document.querySelector('.chip.active')?.dataset.filter);
+  applyCompanyFilter(selectedCompany);
 
   // mobile nav
   const burger = document.getElementById('burger');
   const navLinks = document.querySelector('.nav-links');
-  burger.addEventListener('click',()=>{
-    const open = navLinks.style.display === 'flex';
-    navLinks.style.display = open ? 'none' : 'flex';
-    navLinks.style.flexDirection = 'column';
-    navLinks.style.position='absolute';
-    navLinks.style.top='60px';
-    navLinks.style.right='20px';
-    navLinks.style.background='#fff';
-    navLinks.style.padding='20px';
-    navLinks.style.borderRadius='12px';
-    navLinks.style.boxShadow='0 10px 30px rgba(0,0,0,.15)';
-    navLinks.style.gap='16px';
+  burger?.addEventListener('click',()=>{
+    const open = navLinks.classList.toggle('open');
+    burger.setAttribute('aria-expanded',String(open));
   });
+  navLinks?.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{
+    navLinks.classList.remove('open');
+    burger?.setAttribute('aria-expanded','false');
+  }));
 
   // Fill each marquee so the moving logo loop never leaves an empty area.
   document.querySelectorAll('.adobe-marquee-track').forEach(track=>{
