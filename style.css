@@ -640,6 +640,10 @@ footer{background:#fff}
   #proses{padding:44px 0 52px}.proc-item{padding:14px 12px}.testi{padding:18px;min-height:0}body>section:has(.testi-grid){padding:48px 0}
   .contact{margin:0 14px;padding:34px 22px}.contact h2{font-size:30px}.contact p{font-size:14px}.contact-links{gap:8px}.contact-links a{padding:8px 12px;font-size:12px}
 }
+
 @media(max-width:360px){
   .hero .wrap{padding:0 18px}.name{font-size:40px}.hero-actions .btn{padding:10px 13px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-art{height:260px}.portfolio-categories{grid-template-columns:1fr}.portfolio-category{padding:9px 9px 13px}.portfolio-category img{height:160px}.portfolio-category strong{font-size:14px}.portfolio-category small{font-size:9px}.sticky-wrap{grid-template-columns:1fr}.sticky{min-height:0}.process{grid-template-columns:1fr}.about-text h2{font-size:32px}
 }
+
+/* Keep the hero portrait circular at every breakpoint. */
+.visual-main{height:auto;aspect-ratio:1;border-radius:50%;transform:none}
