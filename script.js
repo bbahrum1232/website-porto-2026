@@ -30,6 +30,13 @@
       applyCompanyFilter(chip.dataset.filter);
     });
   });
+  document.querySelectorAll('.portfolio-category').forEach(category=>{
+    category.addEventListener('click',()=>{
+      const matchingChip = document.querySelector(`.chip[data-filter="${category.dataset.filter}"]`);
+      matchingChip?.click();
+      document.querySelector('#portfolio-gallery .chips')?.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+  });
   applyCompanyFilter(selectedCompany);
 
   // mobile nav
