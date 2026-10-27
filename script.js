@@ -1,3 +1,9 @@
+const currentUrl = new URL(window.location.href);
+if(currentUrl.searchParams.get('utm_source')==='chatgpt.com'){
+  currentUrl.searchParams.delete('utm_source');
+  window.history.replaceState(window.history.state,'',`${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`);
+}
+
   // Filter project berdasarkan company.
   const chips = document.querySelectorAll('.chip');
   const cards = document.querySelectorAll('.card');
