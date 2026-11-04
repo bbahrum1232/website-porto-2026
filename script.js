@@ -9,6 +9,48 @@ if(currentUrl.searchParams.get('utm_source')==='chatgpt.com'){
   const cards = document.querySelectorAll('.card');
   const emptyProject = document.querySelector('.empty-project');
   const projectSearch = document.getElementById('projectSearch');
+  const portfolioVideos = document.querySelectorAll('.card video[data-src]');
+  const loadPortfolioVideo = video=>{
+    if(video.dataset.loaded) return;
+    video.src = video.dataset.src;
+    video.dataset.loaded = 'true';
+    video.load();
+  };
+  document.querySelectorAll('.card .play').forEach(button=>{
+    const video = button.closest('.card').querySelector('video[data-src]');
+    if(!video) return;
+    const syncPlaybackState = ()=>{
+      const playing = !video.paused;
+      button.dataset.playing = String(playing);
+      button.setAttribute('aria-label',`${playing ? 'Jeda' : 'Putar'} ${button.getAttribute('aria-label').replace(/^(Putar|Jeda) /,'')}`);
+    };
+    video.addEventListener('play',syncPlaybackState);
+    video.addEventListener('pause',syncPlaybackState);
+    button.addEventListener('click',()=>{
+      loadPortfolioVideo(video);
+      video.controls = true;
+      if(video.paused){
+        video.play().catch(error=>{
+          console.error('Video portofolio gagal diputar:',error);
+        });
+      }else{
+        video.pause();
+      }
+    });
+  });
+  const videoObserver = 'IntersectionObserver' in window
+    ? new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        const video = entry.target;
+        if(entry.isIntersecting && !video.closest('.card').classList.contains('hidden')){
+          loadPortfolioVideo(video);
+        }else{
+          video.pause();
+        }
+      });
+    },{rootMargin:'120px 0px',threshold:0.01})
+    : null;
+  portfolioVideos.forEach(video=>videoObserver?.observe(video));
   let selectedCompany = document.querySelector('.chip.active')?.dataset.filter;
   let searchTerm = '';
   const applyCompanyFilter = company=>{
@@ -18,6 +60,11 @@ if(currentUrl.searchParams.get('utm_source')==='chatgpt.com'){
       const searchableText = `${card.textContent} ${card.querySelector('img')?.alt || ''} ${card.dataset.cat || ''}`.toLowerCase();
       const isVisible = card.dataset.company===company && searchableText.includes(searchTerm);
       card.classList.toggle('hidden',!isVisible);
+      if(!isVisible) card.querySelector('video')?.pause();
+      else if(!videoObserver){
+        const video = card.querySelector('video[data-src]');
+        if(video) loadPortfolioVideo(video);
+      }
       if(isVisible) visibleCards++; 
     });
     if(emptyProject){
