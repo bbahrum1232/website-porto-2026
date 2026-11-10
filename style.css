@@ -319,7 +319,7 @@
   .play[data-playing="true"]::after{content:'||';border:0;font-size:20px;font-weight:800;margin:0;color:var(--ink);}
   .card .play[data-playing="true"],
   .card:hover .play[data-playing="true"]{
-    opacity:0;visibility:hidden;pointer-events:none;
+    display:none;
   }
 
   .scrub{
