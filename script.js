@@ -17,15 +17,17 @@ if(currentUrl.searchParams.get('utm_source')==='chatgpt.com'){
     video.load();
   };
   document.querySelectorAll('.card .play').forEach(button=>{
-    const video = button.closest('.card').querySelector('video[data-src]');
+    const video = button.closest('.card').querySelector('video');
     if(!video) return;
     const syncPlaybackState = ()=>{
-      const playing = !video.paused;
+      const playing = !video.paused && !video.ended;
       button.dataset.playing = String(playing);
-      button.setAttribute('aria-label',`${playing ? 'Jeda' : 'Putar'} ${button.getAttribute('aria-label').replace(/^(Putar|Jeda) /,'')}`);
+      button.setAttribute('aria-label',`${playing ? 'Jeda' : 'Putar'} video`);
     };
     video.addEventListener('play',syncPlaybackState);
     video.addEventListener('pause',syncPlaybackState);
+    video.addEventListener('ended',syncPlaybackState);
+    syncPlaybackState();
     button.addEventListener('click',()=>{
       loadPortfolioVideo(video);
       video.controls = true;
