@@ -25,6 +25,7 @@ if(currentUrl.searchParams.get('utm_source')==='chatgpt.com'){
       button.setAttribute('aria-label',`${playing ? 'Jeda' : 'Putar'} video`);
     };
     video.addEventListener('play',syncPlaybackState);
+    video.addEventListener('playing',syncPlaybackState);
     video.addEventListener('pause',syncPlaybackState);
     video.addEventListener('ended',syncPlaybackState);
     syncPlaybackState();
